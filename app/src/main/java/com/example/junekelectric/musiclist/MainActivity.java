@@ -1,6 +1,8 @@
 package com.example.junekelectric.musiclist;
+import android.Manifest;
 import android.content.ContentResolver;
 import android.content.ContentUris;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -16,7 +18,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,22 +60,21 @@ import java.util.List;
             return true;
         }
 
-        enum FrgmType {fRoot, fAlbum}
-
+        enum FrgmType {fRoot, fAlbum, fArtist}
         private FrgmType fTop;
+        private Artist focusedArtist;
+        public void focusArtist(Artist item)  {if(item != null) focusedArtist  = item;}
+        public Album getFocusedArtist() {return focusedArtist;}
 
         private Album focusedAlbum;
-
         public void focusAlbum(Album item) {
             if (item != null) focusedAlbum = item;
         }
-
         public Album getFocusedAlbum() {
             return focusedAlbum;
         }
 
         public void setNewFragment(FrgmType CallFragment) {
-
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction ft = fm.beginTransaction();
             fTop = CallFragment;
@@ -90,6 +90,13 @@ import java.util.List;
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             ft.addToBackStack(null);
             ft.commit();
+
+            switch(CallFragment)
+            {
+                case fRoot   : ft.replace(R.id.root, new RootMenu(),     "Root"); break;
+                case fAlbum  : ft.replace(R.id.root, new AlbumMenu(),   "album"); break;
+                case fArtist : ft.replace(R.id.root, new ArtistMenu(), "artist"); break;
+            }
         }
 
         public AdapterView.OnItemClickListener AlbumClickListener
@@ -120,7 +127,29 @@ import java.util.List;
             }
         };
 
+        public AdapterView.OnItemClickListener ArtistClickListener
+                = new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView parent, View view,
+                                    int position, long id) {
+                ListView lv = (ListView) parent;
+                focusArtist((Artist) lv.getItemAtPosition(position));
+                setNewFragment(FrgmType.fArtist);
+            }
+        };
 
+        public AdapterView.OnItemLongClickListener ArtistLongClickListener
+                = new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView parent, View view,
+                                           int position, long id) {
+                ListView lv = (ListView) parent;
+                Artist item = (Artist) lv.getItemAtPosition(position);
+                Toast.makeText(MainActivity.this, "LongClick:" + item.artist, Toast.LENGTH_LONG).show();
+                return true;
+            }
+        };
+        
         //This app will search your music files
 
 //    @Override

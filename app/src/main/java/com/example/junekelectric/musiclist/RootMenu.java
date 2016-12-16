@@ -1,5 +1,6 @@
 package com.example.junekelectric.musiclist;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -21,7 +22,7 @@ public class RootMenu extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.menu, container, false);
+        View rootView = inflater.inflate(R.layout.menu, container, false);;
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getChildFragmentManager());
         mViewPager = (ViewPager) rootView.findViewById(R.id.pager);
@@ -96,6 +97,7 @@ public class RootMenu extends Fragment {
             super.onCreate(savedInstanceState);
 
             MainActivity activity = (MainActivity) getActivity();
+
             List tracks = Track.getItems(activity);
 
             View v = inflater.inflate(R.layout.menu_tracks, container, false);
@@ -139,6 +141,9 @@ public class RootMenu extends Fragment {
             ListView artistList = (ListView) v.findViewById(R.id.listArtists);
             ListArtistAdapter adapter = new ListArtistAdapter(activity, artists);
             artistList.setAdapter(adapter);
+
+            artistList.setOnItemClickListener(activity.ArtistClickListener);
+            artistList.setOnItemLongClickListener(activity.ArtistLongClickListener);
 
             return v;
         }
