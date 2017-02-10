@@ -43,6 +43,7 @@ public class RootMenu extends Fragment {
         }
 
         @Override
+        //これは、様々な画面に表示するってこと
         public Fragment getItem(int position) {
             Fragment fragment = null;
             switch (position) {

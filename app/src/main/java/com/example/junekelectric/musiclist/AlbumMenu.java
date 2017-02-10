@@ -28,7 +28,7 @@ public class AlbumMenu extends Fragment {
         TextView album_title =  (TextView) partView.findViewById(R.id.album_title);
         TextView album_artist = (TextView) partView.findViewById(R.id.album_artist);
         TextView album_tracks = (TextView) partView.findViewById(R.id.album_tracks);
-        ImageView album_art =  (ImageView) partView.findViewById(R.id.album_info);
+        ImageView album_art =  (ImageView) partView.findViewById(R.id.album_art);
 
         album_title.setText(album_item.album);
         album_artist.setText(album_item.artist);

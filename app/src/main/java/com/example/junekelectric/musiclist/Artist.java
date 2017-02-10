@@ -4,17 +4,21 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.provider.MediaStore;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Artist {
 
-    public long id;
+    public long artistId;
     public String artist;
     public String artistKey;
     public int albums;
     public int tracks;
+    //private View partView;
 
     public static final String[] FILLED_PROJECTION = {
             MediaStore.Audio.Artists._ID,
@@ -25,7 +29,7 @@ public class Artist {
     };
 
     public Artist(Cursor cursor) {
-        id = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Artists._ID));
+        artistId = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Artists._ID));
         artist = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Artists.ARTIST));
         artistKey = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Artists.ARTIST_KEY));
         albums = cursor.getInt(cursor.getColumnIndex(MediaStore.Audio.Artists.NUMBER_OF_ALBUMS));
@@ -33,7 +37,6 @@ public class Artist {
     }
 
     public static List getItems(Context activity) {
-
         List artists = new ArrayList();
 
         ContentResolver resolver = activity.getContentResolver();
@@ -49,10 +52,7 @@ public class Artist {
             artists.add(new Artist(cursor));
         }
 
-
         cursor.close();
         return artists;
     }
-
-
 }

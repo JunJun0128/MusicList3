@@ -10,6 +10,10 @@ import android.provider.MediaStore;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.junekelectric.musiclist.ArtistMenu.album_hash;
+import static com.example.junekelectric.musiclist.ArtistMenu.artist_item;
+//import static com.example.junekelectric.musiclist.R.id.tracks;
+
 /**
  * Created by Junekelectric on 16/05/27.
  */
@@ -45,6 +49,7 @@ public class Track {
         SELECTION_ARG[0] = String.valueOf(albumID);
         Cursor cursor = resolver.query(
                 MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+                //内容を読み取ってる
                 Track.COLUMNS,
                 MediaStore.Audio.Media.ALBUM_ID + "= ?",
                 SELECTION_ARG,
@@ -57,12 +62,37 @@ public class Track {
         cursor.close();
         return tracks;
     }
+    public static List getItemsByArtist(Context activity, long artistID) {
+
+        List tracks = new ArrayList();
+        String[] SELECTION_ARG = {""};
+        SELECTION_ARG[0] = artist_item.artist;
+
+        ContentResolver resolver = activity.getContentResolver();
+        Cursor cursor = resolver.query(
+                MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+                Track.COLUMNS,
+                MediaStore.Audio.Media.ARTIST + "= ?",
+                SELECTION_ARG,
+                "TRACK  ASC"
+        );
+        album_hash.clear();
+        while( cursor.moveToNext() ){
+            if( cursor.getLong(cursor.getColumnIndex( MediaStore.Audio.Media.DURATION)) < 3000 ){continue;}
+            tracks.add(new Track(cursor));
+            album_hash.put(
+                    cursor.getString( cursor.getColumnIndex( MediaStore.Audio.Media.ALBUM )),
+                    String.valueOf(cursor.getLong( cursor.getColumnIndex( MediaStore.Audio.Media.ALBUM_ID )))
+            );
+        }
+    }
 
     public static List getItems(Context activity) {
         List tracks = new ArrayList();
         ContentResolver resolver = activity.getContentResolver();
         Cursor cursor = resolver.query(
                 MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+                //内容を読み取ってる
                 Track.COLUMNS,
                 null,
                 null,

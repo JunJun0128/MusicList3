@@ -11,7 +11,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/album_info"
+            android:id="@+id/album_art"
             android:background="@drawable/dummy" />
 
         <LinearLayout
@@ -43,7 +43,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="トラック名"
+        android:text="トラック名　　　　　　　　時間"
         android:id="@+id/tracktitle" />
 
     <ListView

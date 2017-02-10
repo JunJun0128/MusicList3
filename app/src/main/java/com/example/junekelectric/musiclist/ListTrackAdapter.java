@@ -1,7 +1,6 @@
 package com.example.junekelectric.musiclist;
 
 import android.content.Context;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,7 @@ import java.util.List;
 
 
 public class ListTrackAdapter extends ArrayAdapter<Track> {
-    //Linuxを始めようPART1
+    //Linuxを始めようPART1 4 5でも使う。
 
     LayoutInflater mInflater;
 
@@ -51,7 +50,6 @@ public class ListTrackAdapter extends ArrayAdapter<Track> {
         TextView tracksTextView;
         TextView artistTextView;
         TextView durationTextView;
-
     }
 }
 

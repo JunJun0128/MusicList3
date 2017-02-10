@@ -65,7 +65,6 @@ public class ListAlbumAdapter extends ArrayAdapter<Album>{
     }
 
     static class ViewHolder{
-        //TextView albumTextView;
         TextView artistTextView;
         TextView tracksTextView;
         ImageView artworkImageView;

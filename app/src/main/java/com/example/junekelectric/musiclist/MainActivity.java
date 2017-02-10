@@ -64,7 +64,7 @@ import java.util.List;
         private FrgmType fTop;
         private Artist focusedArtist;
         public void focusArtist(Artist item)  {if(item != null) focusedArtist  = item;}
-        public Album getFocusedArtist() {return focusedArtist;}
+        public Artist getFocusedArtist() {return focusedArtist;}
 
         private Album focusedAlbum;
         public void focusAlbum(Album item) {
